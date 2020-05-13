@@ -14,34 +14,38 @@ class Blog extends Component {
   }
 
   getPosts = async () => {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-    const posts = response.data.slice(0, 4);
-    const updatedPosts = posts.map(post => {
-      return {
-        ...post,
-        author: 'Gaëtan'
-      }
-    })
-    this.setState({posts: updatedPosts})
+    try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+      const posts = response.data.slice(0, 4);
+      const updatedPosts = posts.map(post => {
+        return {
+          ...post,
+          author: 'Gaëtan'
+        }
+      })
+      this.setState({posts: updatedPosts})
+    } catch (error) {
+      this.setState({error: true});
+    }
   }
 
   componentDidMount() {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => {
-        const posts = response.data.slice(0, 4);
-        const updatedPosts = posts.map(post => {
-          return {
-            ...post,
-            author: 'Gaëtan'
-          }
-        })
-        this.setState({posts: updatedPosts})
-      })
-      .catch(error => {
-        this.setState({error: true});
-      })
+    // axios.get('https://jsonplaceholder.typicode.com/posts')
+    //   .then((response) => {
+    //     const posts = response.data.slice(0, 4);
+    //     const updatedPosts = posts.map(post => {
+    //       return {
+    //         ...post,
+    //         author: 'Gaëtan'
+    //       }
+    //     })
+    //     this.setState({posts: updatedPosts})
+    //   })
+    //   .catch(error => {
+    //     this.setState({error: true});
+    //   })
 
-    // this.getPosts();
+    this.getPosts();
   }
 
   postSelectedHandler = (id) => {
